@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import string
-
+import re
 
 # На вход Вашей функции будет передано одно предложение.
 # Необходимо вернуть его исправленную копию так, чтобы оно всегда начиналось с большой буквы и заканчивалось точкой.
@@ -23,6 +23,9 @@ def correct_sentence(text: str) -> str:
     # your code here
 
     text = text.strip()
+    if text == "":
+        return text
+
     text = text[0].upper() + text[1:]
     if text[-1] != ".":
         text += "."
@@ -39,6 +42,7 @@ assert correct_sentence("      greetings, friends       ") == "Greetings, friend
 assert correct_sentence("Greetings, friends.") == "Greetings, friends."
 assert correct_sentence("hi") == "Hi."
 assert correct_sentence("welcome to New York") == "Welcome to New York."
+assert correct_sentence(" ") == ""
 
 
 # Вы должны написать функцию, которая представит человека по переданным параметрам.
@@ -116,6 +120,9 @@ assert second_index("hi mr Mayor", " ") == 5, "Fifth"
 # In[ ]:
 def check(data: str) -> bool:
     # your code here
+    if not re.match("^[a-zA-Z0-9]+$", data) or not (0 < len(data) <= 64):
+        return False
+
     if len(data) < 10:
         return False
 
@@ -145,3 +152,4 @@ assert check('asasasasasasasaas') == False, "3rd example"
 assert check('QWERTYqwerty') == False, "4th example"
 assert check('123456123456') == False, "5th example"
 assert check('QwErTy911poqqqq') == True, "6th example"
+assert check('QwErTy9%11poqqqq') == False
