@@ -33,6 +33,9 @@ class Client:
                                                            loop=self.loop)
             print("Connect successful!")
 
+            name = input('Введите ваше имя: ')
+            writer.write(name.encode())
+
             while True:
                 cmd = input('\rEnter cmd: ').lower()
 
@@ -42,12 +45,14 @@ class Client:
                     pass
                 elif len(cmd) == 2 and cmd[:2] == "ls":
                     writer.write("ls".encode())
-                    data = await reader.read()
+                    data = await reader.readline()
                     print('Players: %r' % data.decode())
                 elif cmd == "h" or cmd == "help":
                     print("ls - Список участников")
                     print("lg - Список доступных игр")
                     print("con [:game name] - подключится к открытой игре")
+                else:
+                    print("Не верная команда")
 
         except OSError as e:
             print(e)
